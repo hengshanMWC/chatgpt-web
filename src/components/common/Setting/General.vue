@@ -8,6 +8,7 @@ import type { UserInfo } from '@/store/modules/user/helper'
 import { getCurrentDate } from '@/utils/functions'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { t } from '@/locales'
+import { getFile } from '@/utils/common'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -85,11 +86,7 @@ function exportData(): void {
 }
 
 function importData(event: Event): void {
-  const target = event.target as HTMLInputElement
-  if (!target || !target.files)
-    return
-
-  const file: File = target.files[0]
+  const file = getFile(event)
   if (!file)
     return
 

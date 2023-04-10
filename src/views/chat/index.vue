@@ -9,6 +9,7 @@ import { Message } from './components'
 import { useScroll } from './hooks/useScroll'
 import { useChat } from './hooks/useChat'
 import { useCopyCode } from './hooks/useCopyCode'
+import { useResume } from './hooks/useResume'
 import { useUsingContext } from './hooks/useUsingContext'
 import HeaderComponent from './components/Header/index.vue'
 import { HoverButton, SvgIcon } from '@/components/common'
@@ -33,6 +34,7 @@ const { isMobile } = useBasicLayout()
 const { addChat, updateChat, updateChatSome, getChatByUuidAndIndex } = useChat()
 const { scrollRef, scrollToBottom, scrollToBottomIfAtBottom } = useScroll()
 const { usingContext, toggleUsingContext } = useUsingContext()
+const { resumeUpload } = useResume()
 
 const { uuid } = route.params as { uuid: string }
 
@@ -529,6 +531,12 @@ onUnmounted(() => {
           <HoverButton v-if="!isMobile" @click="toggleUsingContext">
             <span class="text-xl" :class="{ 'text-[#4b9e5f]': usingContext, 'text-[#a8071a]': !usingContext }">
               <SvgIcon icon="ri:chat-history-line" />
+            </span>
+          </HoverButton>
+          <HoverButton class="relative">
+            <input type="file" class="opacity-0 absolute w-full h-full cursor-pointer" style="font-size: 0" @change="resumeUpload">
+            <span class="text-xl text-[#4f555e] dark:text-white">
+              <SvgIcon icon="ri:file-text-line" />
             </span>
           </HoverButton>
           <NAutoComplete v-model:value="prompt" :options="searchOptions" :render-label="renderOption">

@@ -1,4 +1,5 @@
 import type { AxiosProgressEvent, GenericAbortSignal } from 'axios'
+import request from '@/utils/request/axios'
 import { post } from '@/utils/request'
 import { useSettingStore } from '@/store'
 
@@ -47,5 +48,16 @@ export function fetchVerify<T>(token: string) {
   return post<T>({
     url: '/verify',
     data: { token },
+  })
+}
+
+export function fetchResumeParser<T>(file: File, url: string) {
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('url', url)
+  return request<T>({
+    url: '/resume-parser',
+    data: formData,
+    method: 'POST',
   })
 }
